@@ -38,6 +38,26 @@ describe Organization::ManagerialDepartment do
       department1 = FactoryGirl.build(:managerial_department, sub_departments: [sub_department1, sub_department2])
       department2 = FactoryGirl.build(:managerial_department, sub_departments: [sub_department3, department1])
       expect(department2.inventory).to eq(900)
+    end
+
+    it "should return average inventory as 500 when initialised with 2 procurement_department with inventory as 500 and 500" do
+      sub_department1 = FactoryGirl.build(:procurement_department, inventory: 500)
+      sub_department2 = FactoryGirl.build(:procurement_department, inventory:500)
+      department3 = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
+      expect(department3.average_inventory).to eq(500)
     end 
+
+    it "should return number of black color inventories as 500 when initialised with 2 procurement_department white and black colored inventories of 250 each " do
+      sub_department1 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'white'})
+      sub_department2 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black'})
+      department = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
+      expect(department.custom_inventory('black')).to eq(250)
+    end
+    
   end   
+
 end
+
+
+
+
