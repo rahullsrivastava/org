@@ -23,10 +23,16 @@ describe Organization::ProcurementDepartment do
   end
 
   context 'custom_inventory with exclusion' do
-    it 'should return inventory size for black color as 0 for a Department initialized with 50 inventory and category color as black' do
+    it 'should return inventory size for black color as 0 for a Department initialized with 50 tshirt inventory and category color as black' do
       department = FactoryGirl.build(:procurement_department, inventory:50, categories:{'color' => 'black', 'garment_subtype' => 'tshirt'})
       expect(department.custom_inventory_with_exclusion('black')).to eq(0)
     end
+
+    it 'should return inventory size for black color as 50 for a Department initialized with 50 sweatshirt inventory and category color as black' do
+      department = FactoryGirl.build(:procurement_department, inventory:50, categories:{'color' => 'black', 'garment_subtype' => 'sweatshirt'})
+      expect(department.custom_inventory_with_exclusion('black')).to eq(50)
+    end
+
   end
 
 end

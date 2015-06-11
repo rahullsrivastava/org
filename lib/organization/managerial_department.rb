@@ -29,4 +29,10 @@ class Organization::ManagerialDepartment
 		end
 	end
 
+	def custom_inventory_with_exclusion(color)
+		@sub_departments.inject(0) do |sum, dept| 
+			sum + dept.custom_inventory_with_exclusion(color) 
+		end
+	end
+
 end
