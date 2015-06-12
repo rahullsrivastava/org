@@ -8,8 +8,13 @@ class Organization::ProcurementDepartment
 		@categories = categories
 	end
 
-	def generate_report(department)
-		@inventory
+	def colour
+		return nil unless @categories && @categories['colour']
+		@categories['colour']
+	end
+
+	def generate_report(report)
+		report.build(self)			
 	end
 
 	def inventory_by_colour_and_funding(colour, minimum_funds)

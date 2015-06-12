@@ -17,7 +17,8 @@ describe Organization::ProcurementDepartment do
     context 'Category' do
       it "should return inventory of black clothes as 40" do
         department = FactoryGirl.build(:procurement_department, inventory: 40, categories: {"colour" => "black"})
-        expect(department.inventory_by_colour("black")).to eq(40)
+        inventory_by_colour = Reports::InventoryByColour.new('black')
+        expect(department.generate_report(inventory_by_colour)).to eq(40)
       end
 
       it "should return inventory of black clothes as 0" do

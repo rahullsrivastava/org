@@ -1,12 +1,20 @@
 #Generates the report for a department based on colour
 class Reports::InventoryByColour
-	def initialize(colour_name)
-		@colour = colour_name
-	end
+  attr_reader :result, :count
+  def initialize(colour)
+    @count = 0
+    @total = 0
+    @colour = colour
+  end
 
-	def generate_report(department)
-		return 0 unless department.categories["colour"] == @colour
-		department.inventory
-		# inventory += department.generate_report(self)
-	end
+  def build(department)
+    return unless department.colour == @colour
+    @total += department.inventory
+    @count += 1
+  end
+
+  def average
+    return 0 if @count == 0
+    @total/@count
+  end
 end

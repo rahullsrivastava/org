@@ -60,9 +60,29 @@ describe Organization::ManagerialDepartment do
       it "should return inventory of black clothes as 100 for sub departments having black clothes where all are procurement departments" do
         sub_department1 = FactoryGirl.build(:procurement_department, inventory: 40, categories: {"colour" => "black"})
         sub_department2 = FactoryGirl.build(:procurement_department, inventory: 60, categories: {"colour" => "black"})
+        inventory_by_colour = FactoryGirl.build(:inventory_by_colour, colour:'black')
         department = FactoryGirl.build(:managerial_department, sub_departments: [sub_department1, sub_department2])
-        expect(department.inventory_by_colour("black")).to eq(100)
+        expect(department.generate_report(inventory_by_colour)).to eq(100)
       end
+
+      it "should return average inventory of black clothes as 100 for sub departments having black clothes where all are procurement departments" do
+        sub_department1 = FactoryGirl.build(:procurement_department, inventory: 100, categories: {"colour" => "black"})
+        sub_department2 = FactoryGirl.build(:procurement_department, inventory: 100, categories: {"colour" => "black"})
+        inventory_by_colour = FactoryGirl.build(:inventory_by_colour, colour:'black')
+        department = FactoryGirl.build(:managerial_department, sub_departments: [sub_department1, sub_department2])
+        expect(department.average_generate_report(inventory_by_colour)).to eq(100)
+      end
+
+      it "should return average inventory of black clothes as 100 for sub departments having black clothes where all are procurement departments" do
+        sub_department1 = FactoryGirl.build(:procurement_department, inventory: 100, categories: {"colour" => "black"})
+        sub_department2 = FactoryGirl.build(:procurement_department, inventory: 100, categories: {"colour" => "black"})
+        sub_department3 = FactoryGirl.build(:procurement_department, inventory: 100, categories: {"colour" => "black"})
+        sub_department4 = FactoryGirl.build(:managerial_department, sub_departments: [sub_department2, sub_department3])
+        inventory_by_colour = FactoryGirl.build(:inventory_by_colour, colour:'black')
+        department = FactoryGirl.build(:managerial_department, sub_departments: [sub_department1, sub_department4])
+        expect(department.average_generate_report(inventory_by_colour)).to eq(100)
+      end
+
 
       it "should return inventory of black clothes as 200 for sub departments having black clothes where some departments are managerial and some are procurement" do
         sub_department1 = FactoryGirl.build(:procurement_department, inventory: 40, categories: {"colour" => "black"})

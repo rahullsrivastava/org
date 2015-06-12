@@ -1,6 +1,7 @@
 # Represents an administrative division in an organization
 class Organization::ManagerialDepartment
 	
+	attr_reader :categories
 	def initialize(department_name, sub_departments, categories)
 		@name = department_name
 		@sub_departments = sub_departments
@@ -19,20 +20,18 @@ class Organization::ManagerialDepartment
 		end
 	end
 
-	def generate_report(inventory_report)
-		@sub_departments.inject(0) do |sum, dept|
-			sum + inventory_report.generate_report(dept)
+	def generate_report(report)
+		@sub_departments.each do |dept|
+			dept.generate_report(report)
 		end
+	end
+
+	def average_generate_report(report)
+		generate_report(report)/report.count
 	end
 
 	def average_inventory
 		inventory / @sub_departments.length
-	end
-
-	def inventory_by_colour(colour)
-		@sub_departments.inject(0) do |sum, dept| 
-			sum + dept.inventory_by_colour(colour)
-		end
 	end
 
 	def inventory_of_black_and_not_jeans_or_t_shirts
