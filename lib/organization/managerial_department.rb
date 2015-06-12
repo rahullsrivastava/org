@@ -37,7 +37,6 @@ class Organization::ManagerialDepartment
 
 	def inventory_by_color_and_less_than_amount(color, amount)
 		@sub_departments.inject(0) do |sum, dept| 
-			puts dept
 			sum + dept.inventory_by_color_and_less_than_amount(color, amount)
 		end
 	end

@@ -18,7 +18,8 @@ describe Organization::ProcurementDepartment do
   context 'custom inventory' do
     it 'should return inventory size for black colot as 50 for a Department initialized with 50 inventory and category color as black' do
       department = FactoryGirl.build(:procurement_department, inventory:50, categories:{'color' => 'black'})
-      expect(department.inventory_by_color('black')).to eq(50)
+      inventory_by_color = FactoryGirl.build(:inventory_by_color, requirements: 'black')
+      expect(department.report_generator(inventory_by_color)).to eq(50)
     end
   end
 
