@@ -29,9 +29,16 @@ class Organization::ManagerialDepartment
 		end
 	end
 
-	def inventory_by_color_with_exclusion(color)
+	def inventory_of_black_clothes_excluding_jeans_and_tshirts
 		@sub_departments.inject(0) do |sum, dept| 
-			sum + dept.inventory_by_color_with_exclusion(color) 
+			sum + dept.inventory_of_black_clothes_excluding_jeans_and_tshirts
+		end
+	end
+
+	def inventory_by_color_and_less_than_amount(color, amount)
+		@sub_departments.inject(0) do |sum, dept| 
+			puts dept
+			sum + dept.inventory_by_color_and_less_than_amount(color, amount)
 		end
 	end
 

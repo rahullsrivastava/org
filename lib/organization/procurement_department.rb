@@ -20,5 +20,6 @@ class Organization::ProcurementDepartment
 
   def inventory_by_color_and_less_than_amount(color, amount)
     return @inventory if @categories['color'] == color && @cash < amount
+    0
   end
 end

@@ -58,7 +58,15 @@ describe Organization::ManagerialDepartment do
       sub_department1 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black', 'garment_subtype' => 'tshirt'})
       sub_department2 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black', 'garment_subtype' => 'sweatshirt'})
       department = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
-      expect(department.inventory_by_color_with_exclusion('black')).to eq(250)
+      expect(department.inventory_of_black_clothes_excluding_jeans_and_tshirts).to eq(250)
+    end
+
+    it "should return inventories as 250 when initialised with 2 procurement_department black colored tshirt and sweatshirt inventories of 250 each and 500 cash each" do
+      sub_department1 = FactoryGirl.build(:procurement_department, cash: 500, inventory: 250, categories:{'color' => 'black'})
+      sub_department2 = FactoryGirl.build(:procurement_department, cash: 550, inventory: 250, categories:{'color' => 'yellow'})
+      department = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
+      puts department.inspect
+      expect(department.inventory_by_color_and_less_than_amount('black', 600)).to eq(250)
     end
 
   end   
