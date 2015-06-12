@@ -8,13 +8,17 @@ class Organization::ProcurementDepartment
     @categories = categories
 	end
 
-  def custom_inventory(color_name)
+  def inventory_by_color(color_name)
     return @inventory if @categories['color'] == color_name 
     0
   end
 
-  def custom_inventory_with_exclusion(color_name)
-    return @inventory if @categories['color'] == color_name && @categories['garment_subtype'] != 'tshirt' && @categories['garment_subtype'] != 'jeans'
+  def inventory_of_black_clothes_excluding_jeans_and_tshirts
+    return @inventory if @categories['color'] == 'black' && @categories['garment_subtype'] != 'tshirt' && @categories['garment_subtype'] != 'jeans'
     0
+  end
+
+  def inventory_by_color_and_less_than_amount(color, amount)
+    return @inventory if @categories['color'] == color && @cash < amount
   end
 end

@@ -51,14 +51,14 @@ describe Organization::ManagerialDepartment do
       sub_department1 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'white'})
       sub_department2 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black'})
       department = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
-      expect(department.custom_inventory('black')).to eq(250)
+      expect(department.inventory_by_color('black')).to eq(250)
     end
 
     it "should return number of black color inventories as 500 when initialised with 2 procurement_department black colored tshirt and sweatshirt inventories of 250 each " do
       sub_department1 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black', 'garment_subtype' => 'tshirt'})
       sub_department2 = FactoryGirl.build(:procurement_department, inventory: 250, categories:{'color' => 'black', 'garment_subtype' => 'sweatshirt'})
       department = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
-      expect(department.custom_inventory_with_exclusion('black')).to eq(250)
+      expect(department.inventory_by_color_with_exclusion('black')).to eq(250)
     end
 
   end   

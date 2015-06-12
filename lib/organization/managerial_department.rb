@@ -23,15 +23,15 @@ class Organization::ManagerialDepartment
 		inventory/@sub_departments.length
 	end
 
-	def custom_inventory(color)
+	def inventory_by_color(color)
 		@sub_departments.inject(0) do |sum, dept| 
-			sum + dept.custom_inventory(color) 
+			sum + dept.inventory_by_color(color) 
 		end
 	end
 
-	def custom_inventory_with_exclusion(color)
+	def inventory_by_color_with_exclusion(color)
 		@sub_departments.inject(0) do |sum, dept| 
-			sum + dept.custom_inventory_with_exclusion(color) 
+			sum + dept.inventory_by_color_with_exclusion(color) 
 		end
 	end
 
