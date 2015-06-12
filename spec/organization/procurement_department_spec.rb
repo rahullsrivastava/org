@@ -38,6 +38,11 @@ describe Organization::ProcurementDepartment do
       expect(department.inventory_by_color_and_less_than_amount('yellow', 1200)).to eq(300)
     end
 
+    it 'should return inventory size of 0 for department initialized with 300 yellow colored sweatshirts and 1000 funding' do
+      department = FactoryGirl.build(:procurement_department, cash:1000, inventory:300, categories:{'color' => 'yellow'})
+      expect(department.inventory_by_color_and_less_than_amount('yellow', 800)).to eq(0)
+    end
+
   end
 
 end
