@@ -69,6 +69,17 @@ describe Organization::ManagerialDepartment do
       expect(department.inventory_by_color_and_less_than_amount('black', 600)).to eq(250)
     end
 
+    it "should return inventories correct inventory for multilevel departments for inventory of specific color less than some amount" do
+      sub_department1 = FactoryGirl.build(:procurement_department, cash: 700, inventory: 200, categories:{'color' => 'black'})
+      sub_department2 = FactoryGirl.build(:procurement_department, cash: 900, inventory: 300, categories:{'color' => 'black'})
+      department1 = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
+      sub_department1 = FactoryGirl.build(:procurement_department, cash: 800, inventory: 150, categories:{'color' => 'black'})
+      sub_department2 = FactoryGirl.build(:procurement_department, cash: 950, inventory: 170, categories:{'color' => 'yellow'})
+      department2 = FactoryGirl.build(:managerial_department, sub_departments:[sub_department1, sub_department2])
+      department = FactoryGirl.build(:managerial_department, sub_departments:[department1, department2])
+      expect(department.inventory_by_color_and_less_than_amount('black', 850)).to eq(350)
+    end
+
   end   
 
 end
